@@ -19,6 +19,7 @@ const runTest = (wpt, url, options) => {
         wpt.runTest(url, tempOptions, async(err, result) => {
             try {
                 if (result) {
+                    core.debug(result);
                     return resolve({'result':result,'err':err});
                 } else {
                     return reject(err);
@@ -63,7 +64,6 @@ async function renderComment(data) {
     }
 }
 async function run() {
-
     const wpt = new WebPageTest('www.webpagetest.org',WPT_API_KEY);
 
     //TODO: make this configurable
@@ -81,6 +81,11 @@ async function run() {
     if (WPT_LABEL) {
         options.label = WPT_LABEL;
     }
+
+    core.startGroup('WebPageTest Configuration');
+    core.info(`WebPageTest settings: ${JSON.stringify(options, null, '  ')}`)
+    core.endGroup();
+
     core.startGroup(`Testing urls in WebPageTest..`);
     //for our commit
     let runData = {};
