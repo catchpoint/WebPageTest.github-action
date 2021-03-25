@@ -2,8 +2,10 @@ const WebPageTest = require("webpagetest");
 const core = require("@actions/core");
 const github = require('@actions/github');
 const ejs = require('ejs');
+const { cornflowerblue } = require("color-name");
 
 const WPT_BUDGET = core.getInput('budget');
+const WPT_OPTIONS = core.getInput('wptOptions');
 const WPT_API_KEY = core.getInput('apiKey');
 const WPT_URLS = core.getInput('urls').split("\n");
 const WPT_LABEL = core.getInput('label');
@@ -69,11 +71,24 @@ async function run() {
     //TODO: make this configurable
     let options = {
         "firstViewOnly": true,
-        "runs": 1,
-        "location": 'Dulles:Chrome',
+        "runs": 3,
+        "location": 'Dulles_MotoG4',
         "connectivity": '4G',
         "pollResults": 5,
         "timeout": 240
+    }
+    if (WPT_OPTIONS) {
+        let settings = require(WPT_OPTIONS);
+        if (typeof settings === 'object' && settings !== null) {
+            core.debug(settings);
+            options = {
+                ...options,
+                ...settings
+            }
+        } else {
+            core.setFailed("The specified WebPageTest settings aren't a valid JavaScript object");
+        }
+
     }
     if (WPT_BUDGET) {
         options.specs = require(WPT_BUDGET);
