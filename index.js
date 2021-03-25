@@ -1,7 +1,6 @@
 const WebPageTest = require("webpagetest");
 const core = require("@actions/core");
 const github = require('@actions/github');
-
 const ejs = require('ejs');
 
 const WPT_BUDGET = core.getInput('budget');
@@ -16,6 +15,7 @@ const runTest = (wpt, url, options) => {
     let tempOptions = JSON.parse(JSON.stringify(options));
 
     return new Promise((resolve, reject) => {
+        core.info(`Submitting test for ${url}...`);
         wpt.runTest(url, tempOptions, async(err, result) => {
             try {
                 if (result) {
@@ -45,14 +45,12 @@ async function renderComment(data) {
     try {
         const octokit = github.getOctokit(GITHUB_TOKEN, {log: console});
         const context = github.context;
-        console.info(data);
         let markdown = await ejs.renderFile('./templates/comment.md', data);
         markdown
             .replace(/\%/g, '%25')
             .replace(/\n/g, '%0A')
             .replace(/\r/g, '%0D')    
 
-        core.info(markdown);
         //submit a comment
         await octokit.issues.createComment({
             owner: context.repo.owner,
@@ -61,7 +59,7 @@ async function renderComment(data) {
             body: markdown
         });
     } catch (e) {
-        core.info(e);
+        core.setFailed(`Action failed with error ${e}`);
     }
 }
 async function run() {
@@ -137,12 +135,12 @@ async function run() {
                             return;
                         }
                     } catch (e) {
-                        core.info(e);
+                        core.setFailed(`Action failed with error ${e}`);
                     }
                     
                 });
             } catch (e) {
-                console.info(e);
+                core.setFailed(`Action failed with error ${e}`);
             }
     })).then(() => {
         if (GH_EVENT_NAME == 'pull_request') {
