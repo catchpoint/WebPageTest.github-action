@@ -3,6 +3,7 @@ const core = require("@actions/core");
 const github = require('@actions/github');
 const ejs = require('ejs');
 const { cornflowerblue } = require("color-name");
+const { keyword } = require("color-convert");
 
 const WPT_BUDGET = core.getInput('budget');
 const WPT_OPTIONS = core.getInput('wptOptions');
@@ -11,6 +12,13 @@ const WPT_URLS = core.getInput('urls').split("\n");
 const WPT_LABEL = core.getInput('label');
 const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
 const GH_EVENT_NAME = process.env.GITHUB_EVENT_NAME;
+const METRICS = {
+    "TTFB": "Time to First Byte",
+    "firstContentfulPaint": "First Contentful Paint",
+    "TotalBlockingTime": "Total Blocking Time",
+    "chromeUserTiming.LargestContentfulPaint": "Largest Contentful Paint",
+    "chromeUserTiming.CumulativeLayoutShift": "Cumulative Layout Shift",
+}
 
 const runTest = (wpt, url, options) => {
     // clone options object to avoid WPT wrapper issue
@@ -48,6 +56,7 @@ async function renderComment(data) {
     try {
         const octokit = github.getOctokit(GITHUB_TOKEN, {log: console});
         const context = github.context;
+        
         let markdown = await ejs.renderFile('./templates/comment.md', data);
         markdown
             .replace(/\%/g, '%25')
@@ -64,6 +73,25 @@ async function renderComment(data) {
     } catch (e) {
         core.setFailed(`Action failed with error ${e}`);
     }
+}
+function collectData(results, runData) {
+    let testData = {
+        "url": results.data.url,
+        "testLink": results.data.summary,
+        "waterfall": results.data.median.firstView.images.waterfall,
+        "metrics": []
+    }
+    for (const [key, value] of Object.entries(METRICS)) {
+        core.debug(key);
+        core.debug(value);
+        if (results.data.median.firstView[key]) {
+            testData.metrics.push({
+                "name": value,
+                "value": results.data.median.firstView[key]
+            })
+        }
+    };
+    runData["tests"].push(testData);
 }
 async function run() {
     const wpt = new WebPageTest('www.webpagetest.org',WPT_API_KEY);
@@ -119,12 +147,8 @@ async function run() {
                             
                             if (GH_EVENT_NAME == 'pull_request') {
                                 let testResults = await retrieveResults(wpt, result.result.testId);
-                                let testData = {
-                                    "url": testResults.data.url,
-                                    "testLink": testResults.data.summary,
-                                    "waterfall": testResults.data.median.firstView.images.waterfall
-                                }
-                                runData["tests"].push(testData);
+                                collectData(testResults, runData);
+                                
                             }
                             // testspecs also returns the number of assertion fails as err
                             // > 0 means we need to fail
@@ -143,12 +167,7 @@ async function run() {
                             
                             if (GH_EVENT_NAME == 'pull_request') {
                                 let testResults = await retrieveResults(wpt, result.result.data.id);
-                                let testData = {
-                                    "url": testResults.data.url,
-                                    "testLink": testResults.data.summary,
-                                    "waterfall": testResults.data.median.firstView.thumbnails.waterfall
-                                }
-                                runData["tests"].push(testData);
+                                collectData(testResults, runData);
                             }
                             return;
                         } else {
