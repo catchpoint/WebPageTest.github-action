@@ -11,6 +11,7 @@ const WPT_API_KEY = core.getInput('apiKey');
 const WPT_URLS = core.getInput('urls').split("\n");
 const WPT_LABEL = core.getInput('label');
 const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
+const DIRECTORY = process.env.GITHUB_WORKSPACE;
 const GH_EVENT_NAME = process.env.GITHUB_EVENT_NAME;
 const METRICS = {
     "TTFB": "Time to First Byte",
@@ -106,7 +107,7 @@ async function run() {
         "timeout": 240
     }
     if (WPT_OPTIONS) {
-        let settings = require(WPT_OPTIONS);
+        let settings = require(`${DIRECTORY}/${WPT_OPTIONS}`);
         if (typeof settings === 'object' && settings !== null) {
             core.debug(settings);
             options = {
@@ -119,7 +120,7 @@ async function run() {
 
     }
     if (WPT_BUDGET) {
-        options.specs = require(WPT_BUDGET);
+        options.specs = require(`${DIRECTORY}/${WPT_BUDGET}`);
     }
     if (WPT_LABEL) {
         options.label = WPT_LABEL;
