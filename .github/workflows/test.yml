@@ -1,0 +1,21 @@
+on: [push, pull_request]
+
+jobs:
+
+  test_job:
+    runs-on: ubuntu-latest
+    name: WPT Test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: WebPageTest Action
+        id: webpagetest-action
+        uses: ./
+        with:
+          apiKey: ${{ secrets.WPT_API_KEY }}
+          urls: |
+            https://www.cnn.com/
+            https://www.timkadlec.com/
+          budget: './wpt-budget.json'
+          label: 'GH Action test'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

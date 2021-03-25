@@ -1,0 +1,17 @@
+name: 'WebPageTest GitHub Action'
+description: 'Automatically run WebPageTest against URLs'
+inputs:
+  apiKey:
+    description: 'WebPageTest API Token'
+    required: true
+  urls:
+    description: 'List of URL(s) to test'
+  budget:
+    description: 'WebPageTest Test Specs JSON file'
+  label:
+    description: 'Label for test (shows up in WebPageTest)'
+  GITHUB_TOKEN:
+    description: 'Secret GitHub Token (automatically provided by GitHub)'
+runs:
+  using: 'node12'
+  main: 'index.js'
