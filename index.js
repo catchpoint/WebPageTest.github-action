@@ -58,7 +58,7 @@ async function renderComment(data) {
         const octokit = github.getOctokit(GITHUB_TOKEN, {log: console});
         const context = github.context;
         
-        let markdown = await ejs.renderFile('./templates/comment.md', data);
+        let markdown = await ejs.renderFile(`${__dirname}/templates/comment.md`, data);
         markdown
             .replace(/\%/g, '%25')
             .replace(/\n/g, '%0A')
