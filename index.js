@@ -175,12 +175,14 @@ async function run() {
                             return;
                         }
                     } catch (e) {
-                        core.setFailed(`Action failed with error ${e.message}`);
+                        console.info(e);
+                        core.setFailed(`Action failed with error ${e}`);
                     }
                     
                 });
             } catch (e) {
-                core.setFailed(`Action failed with error ${e.message}`);
+                console.info(e);
+                core.setFailed(`Actions failed with error ${e}`);
             }
     })).then(() => {
         if (GH_EVENT_NAME == 'pull_request') {
