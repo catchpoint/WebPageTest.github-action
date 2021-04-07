@@ -123,11 +123,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
       - name: Wait for the Netlify Preview
         uses: jakepartusch/wait-for-netlify-action@v1.2
         id: netlify
         with:
           site_name: 'your-netlify-site-name'
+
       - name: WebPageTest
         uses: WPO-Foundation/webpagetest-github-action@main
         with:
