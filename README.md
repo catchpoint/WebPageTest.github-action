@@ -107,6 +107,40 @@ WebPageTest would test each run's First Contentful Paint. If the First Contentfu
 ![Example of a WPT action failing the PR if a budget is exceeded](/images/wpt-action-fail-pr.png)
 
 The specs format provides tremendous flexiblity in which metrics you want to budget against. For more information, check out [the official documentation](https://github.com/marcelduran/webpagetest-api/wiki/Test-Specs).
+
+### Testing against a deployment URL
+If you are going to set and enforce performance budgets, **make sure to pass a preview URL** to test against to make sure that you're testing against the latest changes, not against a prior version of your site.
+
+As an example, if you happen to be using a service like [Netlify](https://www.netlify.com/), they'll generate deploy previews for each PR. Here's an example of how you could run the WebPageTest action against the latest deploy preview using the [Wait for Netlify Action](https://github.com/JakePartusch/wait-for-netlify-action).
+
+```yml
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: WebPageTest Action
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Wait for the Netlify Preview
+        uses: jakepartusch/wait-for-netlify-action@v1.2
+        id: netlify
+        with:
+          site_name: 'your-netlify-site-name'
+      - name: WebPageTest
+        uses: WPO-Foundation/webpagetest-github-action@main
+        with:
+          apiKey: ${{ secrets.WPT_API_KEY }}
+          urls: |
+            ${{ steps.netlify.outputs.url }}
+            ${{ steps.netlify.outputs.url }}/about
+          label: 'GitHub Action Test'
+          budget: 'wpt-budget.json'
+          wptOptions: 'wpt-options.json'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
 ### Customizing your WebPageTest tests
 There are a _lot_ of [options available in WebPageTest](https://github.com/marcelduran/webpagetest-api#test-works-for-runtest-method-only) to customize your test results, record custom metrics, or do advanced scripting and multi-page flows.
 
