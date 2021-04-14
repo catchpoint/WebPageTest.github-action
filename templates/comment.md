@@ -3,7 +3,7 @@ Automatically triggered by [WebPageTest](https://www.webpagetest.org)'s GitHub A
 
 <% tests.forEach((test) => { %>
 ## Page Tested:<%- test.url %>
-**Full test results: <%- test.testLink %>/**
+**Full test results: <%- test.testLink %>**
 
 | <% test.metrics.forEach((metric) => { %><%- metric.name %> | <% }); %>
 | <% test.metrics.forEach((metric) => { %>--- | <% }); %>
