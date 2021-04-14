@@ -51,8 +51,8 @@ By default, WebPageTest's GitHub Action will run tests whenever the event (pull_
 The tests will be run with the following WebPageTest settings:
 
 - Location: Dulles, VA
-- Browser: Chrome on a Motorola G4
-- Connection Type: 3G connection
+- Browser: Chrome on an emulated Moto G4
+- Connection Type: 4G connection
 - Number of test run per URL: 3
 - First view only (no repeat views tested)
 - The test results will be checked every **5** seconds, up to a limit of **240s**. If no results are returned by then, the test will timeout and fail.

@@ -26,7 +26,7 @@ const runTest = (wpt, url, options) => {
     let tempOptions = JSON.parse(JSON.stringify(options));
 
     return new Promise((resolve, reject) => {
-        core.info(`Submitting test for ${url}...`);
+        core.info(`Submitting test for ${url} ...`);
         wpt.runTest(url, tempOptions, async(err, result) => {
             try {
                 if (result) {
@@ -101,10 +101,11 @@ async function run() {
     let options = {
         "firstViewOnly": true,
         "runs": 3,
-        "location": 'Dulles_MotoG4',
+        "location": 'Dulles:Chrome',
         "connectivity": '4G',
         "pollResults": 5,
-        "timeout": 240
+        "timeout": 240,
+        "emulateMobile": true
     }
     if (WPT_OPTIONS) {
         let settings = require(`${DIRECTORY}/${WPT_OPTIONS}`);
