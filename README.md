@@ -1,5 +1,7 @@
 <p align="center"><img src="https://docs.webpagetest.org/img/wpt-navy-logo.png" alt="WebPageTest Logo" /></p>
 
+<p align="center"><a href="https://docs.webpagetest.org/api/integrations/#officially-supported-integrations">Learn about more WebPageTest API Integrations in our docs</a></p>
+
 # WebPageTest GitHub Action
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](/LICENSE)
 
@@ -186,3 +188,8 @@ And a `wpt-options.json` file containing:
 ```
 
 The defaults values for the number of runs, location, and connectivity type would all be overwritten by the settings specified here. In addition, any ads defined by https://adblockplus.org/ would be automatically blocked.
+
+---
+
+<p align="center"><a href="https://docs.webpagetest.org/api/integrations/#officially-supported-integrations">Learn about more WebPageTest API Integrations in our docs</a></p>
+
