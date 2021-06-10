@@ -145,6 +145,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+_If you are testing against a Netlify deployment preview, it's important to note that the new collaborative features for their previews inject a full single-page application into your page, messing with any performance thresholds you might be trying to enforce. Add the following to your wptOptions JSON to make sure none of the extra code makes it into your test results_
+
+```
+"block": "netlify-cdp-loader.netlify.app"
+```
+
 ### Customizing your WebPageTest tests
 There are a _lot_ of [options available in WebPageTest](https://github.com/marcelduran/webpagetest-api#test-works-for-runtest-method-only) to customize your test results, record custom metrics, or do advanced scripting and multi-page flows.
 
