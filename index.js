@@ -66,11 +66,19 @@ async function renderComment(data) {
             .replace(/\n/g, '%0A')
             .replace(/\r/g, '%0D')    
 
+        const prNumber = GH_EVENT_NAME == 'pull_request'
+            ? context.payload.pull_request.number
+            : GH_EVENT_NAME == 'issue_comment' ?
+                context.payload.issue.number : null;
+        
+        if (!prNumber)
+            throw new Error('Incompatible event "' + GH_EVENT_NAME + '"');
+        
         //submit a comment
         await octokit.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            issue_number: context.payload.pull_request.number,
+            issue_number: prNumber,
             body: markdown
         });
     } catch (e) {
