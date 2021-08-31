@@ -21,6 +21,8 @@ const METRICS = {
     "chromeUserTiming.CumulativeLayoutShift": "Cumulative Layout Shift",
 }
 
+const isReportSupported = () => GH_EVENT_NAME == 'pull_request' || GH_EVENT_NAME == 'issue_comment';
+
 const runTest = (wpt, url, options) => {
     // clone options object to avoid WPT wrapper issue
     let tempOptions = JSON.parse(JSON.stringify(options));
@@ -57,18 +59,26 @@ async function renderComment(data) {
     try {
         const octokit = github.getOctokit(GITHUB_TOKEN, {log: console});
         const context = github.context;
-        
+
         let markdown = await ejs.renderFile(`${__dirname}/templates/comment.md`, data);
         markdown
             .replace(/\%/g, '%25')
             .replace(/\n/g, '%0A')
             .replace(/\r/g, '%0D')    
 
+        const prNumber = GH_EVENT_NAME == 'pull_request'
+            ? context.payload.pull_request.number
+            : GH_EVENT_NAME == 'issue_comment' ?
+                context.payload.issue.number : null;
+        
+        if (!prNumber)
+            throw new Error('Incompatible event "' + GH_EVENT_NAME + '"');
+        
         //submit a comment
         await octokit.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            issue_number: context.payload.pull_request.number,
+            issue_number: prNumber,
             body: markdown
         });
     } catch (e) {
@@ -147,7 +157,7 @@ async function run() {
                                         + url +'. Full results at https://'
                                         + wpt.config.hostname + '/result/' + result.result.testId);
                             
-                            if (GH_EVENT_NAME == 'pull_request') {
+                            if (isReportSupported()) {
                                 let testResults = await retrieveResults(wpt, result.result.testId);
                                 collectData(testResults, runData);
                                 
@@ -167,7 +177,7 @@ async function run() {
                             core.info('Tests successfully completed for ' + url
                                 +'. Full results at ' + result.result.data.summary);
                             
-                            if (GH_EVENT_NAME == 'pull_request') {
+                            if (isReportSupported()) {
                                 let testResults = await retrieveResults(wpt, result.result.data.id);
                                 collectData(testResults, runData);
                             }
@@ -184,7 +194,7 @@ async function run() {
                 core.setFailed(`Action failed with error ${e}`);
             }
     })).then(() => {
-        if (GH_EVENT_NAME == 'pull_request') {
+        if (isReportSupported()) {
             renderComment(runData);
         }
     });
