@@ -82,7 +82,7 @@ async function renderComment(data) {
             body: markdown
         });
     } catch (e) {
-        core.setFailed(`Action failed with error ${e.statusText}`);
+        core.setFailed(`Action failed with error: ${e.statusText}`);
     }
 }
 function collectData(results, runData) {
