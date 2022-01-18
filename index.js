@@ -186,12 +186,12 @@ async function run() {
                             return;
                         }
                     } catch (e) {
-                        core.setFailed(`Action failed with error ${e.statusText}`);
+                        core.setFailed(`Action failed with error: ${e.statusText}`);
                     }
                     
                 });
             } catch (e) {
-                core.setFailed(`Action failed with error ${e.statusText}`);
+                core.setFailed(`Action failed with error: ${e.statusText}`);
             }
     })).then(() => {
         if (isReportSupported()) {
