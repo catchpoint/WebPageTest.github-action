@@ -38,7 +38,7 @@ const runTest = (wpt, url, options) => {
                     return reject(err);
                 }
             } catch (e) {
-                core.info(JSON.stringify(e));
+                core.info(e.statusText);
             }
         })
     });
@@ -82,7 +82,7 @@ async function renderComment(data) {
             body: markdown
         });
     } catch (e) {
-        core.setFailed(`Action failed with error ${JSON.stringify(e)}`);
+        core.setFailed(`Action failed with error ${e.statusText}`);
     }
 }
 function collectData(results, runData) {
@@ -186,12 +186,12 @@ async function run() {
                             return;
                         }
                     } catch (e) {
-                        core.setFailed(`Action failed with error ${JSON.stringify(e)}`);
+                        core.setFailed(`Action failed with error ${e.statusText}`);
                     }
                     
                 });
             } catch (e) {
-                core.setFailed(`Action failed with error ${JSON.stringify(e)}`);
+                core.setFailed(`Action failed with error ${e.statusText}`);
             }
     })).then(() => {
         if (isReportSupported()) {
