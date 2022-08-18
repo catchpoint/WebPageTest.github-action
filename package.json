@@ -20,6 +20,6 @@
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
     "ejs": "^3.1.6",
-    "webpagetest": "^0.5.1"
+    "webpagetest": "^0.6.0"
   }
 }
