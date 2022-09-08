@@ -93,10 +93,6 @@ class Task extends EventEmitter {
     return this._getFullName();
   }
 
-  get params() {
-    return this._getParams();
-  }
-
   _initInvocationChain() {
     // Legacy global invocation chain
     jake._invocationChain.push(this);
@@ -416,12 +412,6 @@ class Task extends EventEmitter {
     }
     path.push(this.name);
     return path.join(':');
-  }
-
-  _getParams() {
-    if (!this.action) return "";
-    let params = new RegExp('(?:'+this.action.name+'\\s*|^)\\s*\\((.*?)\\)').exec(this.action.toString().replace(/\n/g, ''))[1].replace(/\/\*.*?\*\//g, '').replace(/ /g, '');
-    return params;
   }
 
   static getBaseNamespacePath(fullName) {

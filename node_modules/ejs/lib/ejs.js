@@ -44,7 +44,6 @@
  * @public
  */
 
-
 var fs = require('fs');
 var path = require('path');
 var utils = require('./utils');
@@ -65,7 +64,6 @@ var _OPTS_PASSABLE_WITH_DATA = ['delimiter', 'scope', 'context', 'debug', 'compi
 // so we make an exception for `renderFile`
 var _OPTS_PASSABLE_WITH_DATA_EXPRESS = _OPTS_PASSABLE_WITH_DATA.concat('cache');
 var _BOM = /^\uFEFF/;
-var _JS_IDENTIFIER = /^[a-zA-Z_$][0-9a-zA-Z_$]*$/;
 
 /**
  * EJS template function cache. This can be a LRU object from lru-cache NPM
@@ -307,7 +305,7 @@ function fileLoader(filePath){
  */
 
 function includeFile(path, options) {
-  var opts = utils.shallowCopy(utils.createNullProtoObjWherePossible(), options);
+  var opts = utils.shallowCopy({}, options);
   opts.filename = getIncludePath(path, opts);
   if (typeof options.includer === 'function') {
     var includerResult = options.includer(path, opts.filename);
@@ -413,8 +411,8 @@ exports.compile = function compile(template, opts) {
  */
 
 exports.render = function (template, d, o) {
-  var data = d || utils.createNullProtoObjWherePossible();
-  var opts = o || utils.createNullProtoObjWherePossible();
+  var data = d || {};
+  var opts = o || {};
 
   // No options object -- if there are optiony names
   // in the data, copy them to options
@@ -485,7 +483,7 @@ exports.renderFile = function () {
     opts.filename = filename;
   }
   else {
-    data = utils.createNullProtoObjWherePossible();
+    data = {};
   }
 
   return tryHandleCache(opts, data, cb);
@@ -507,8 +505,8 @@ exports.clearCache = function () {
 };
 
 function Template(text, opts) {
-  opts = opts || utils.createNullProtoObjWherePossible();
-  var options = utils.createNullProtoObjWherePossible();
+  opts = opts || {};
+  var options = {};
   this.templateText = text;
   /** @type {string | null} */
   this.mode = null;
@@ -589,21 +587,12 @@ Template.prototype = {
         '  var __output = "";\n' +
         '  function __append(s) { if (s !== undefined && s !== null) __output += s }\n';
       if (opts.outputFunctionName) {
-        if (!_JS_IDENTIFIER.test(opts.outputFunctionName)) {
-          throw new Error('outputFunctionName is not a valid JS identifier.');
-        }
         prepended += '  var ' + opts.outputFunctionName + ' = __append;' + '\n';
-      }
-      if (opts.localsName && !_JS_IDENTIFIER.test(opts.localsName)) {
-        throw new Error('localsName is not a valid JS identifier.');
       }
       if (opts.destructuredLocals && opts.destructuredLocals.length) {
         var destructuring = '  var __locals = (' + opts.localsName + ' || {}),\n';
         for (var i = 0; i < opts.destructuredLocals.length; i++) {
           var name = opts.destructuredLocals[i];
-          if (!_JS_IDENTIFIER.test(name)) {
-            throw new Error('destructuredLocals[' + i + '] is not a valid JS identifier.');
-          }
           if (i > 0) {
             destructuring += ',\n  ';
           }
@@ -694,14 +683,13 @@ Template.prototype = {
     // Adds a local `include` function which allows full recursive include
     var returnedFn = opts.client ? fn : function anonymous(data) {
       var include = function (path, includeData) {
-        var d = utils.shallowCopy(utils.createNullProtoObjWherePossible(), data);
+        var d = utils.shallowCopy({}, data);
         if (includeData) {
           d = utils.shallowCopy(d, includeData);
         }
         return includeFile(path, opts)(d);
       };
-      return fn.apply(opts.context,
-        [data || utils.createNullProtoObjWherePossible(), escapeFn, include, rethrow]);
+      return fn.apply(opts.context, [data || {}, escapeFn, include, rethrow]);
     };
     if (opts.filename && typeof Object.defineProperty === 'function') {
       var filename = opts.filename;
