@@ -38,7 +38,7 @@ const runTest = (wpt, url, options) => {
           return reject(err);
         }
       } catch (e) {
-        core.info(e || JSON.stringify(e));
+        core.info(e.statusText || JSON.stringify(e));
       }
     });
   });
@@ -80,7 +80,8 @@ async function renderComment(data) {
       body: markdown,
     });
   } catch (e) {
-    core.setFailed(`Action failed with error: ${JSON.stringify(e)}`);
+    console.log(e);
+    core.setFailed(`Action failed with error: ${e.statusText || JSON.stringify(e)}`);
   }
 }
 function collectData(results, runData) {
@@ -191,11 +192,13 @@ async function run() {
               return;
             }
           } catch (e) {
-            core.setFailed(`Action failed with error: ${JSON.stringify(e)}`);
+            console.log(e);
+            core.setFailed(`Action failed with error: ${e.statusText || JSON.stringify(e)}`);
           }
         });
       } catch (e) {
-        core.setFailed(`Action failed with error: ${JSON.stringify(e)}`);
+        console.log(e);
+        core.setFailed(`Action failed with error: ${e.statusText || JSON.stringify(e)}`);
       }
     })
   ).then(() => {
