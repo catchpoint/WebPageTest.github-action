@@ -40,7 +40,6 @@ jobs:
             https://example.com/
             https://example.com/about
           label: 'GitHub Action Test'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 3. Open a Pull Request. WebPageTest's GitHub Action will run in the background and post a comment on your PR.
@@ -89,7 +88,6 @@ jobs:
             https://example.com/about
           label: 'GitHub Action Test'
           budget: 'wpt-budget.json'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 And a `wpt-budget.json` file containing:
@@ -142,7 +140,6 @@ jobs:
           label: 'GitHub Action Test'
           budget: 'wpt-budget.json'
           wptOptions: 'wpt-options.json'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 _If you are testing against a Netlify deployment preview, it's important to note that the new collaborative features for their previews inject a full single-page application into your page, messing with any performance thresholds you might be trying to enforce. Add the following to your wptOptions JSON to make sure none of the extra code makes it into your test results_
@@ -179,7 +176,6 @@ jobs:
           label: 'GitHub Action Test'
           budget: 'wpt-budget.json'
           wptOptions: 'wpt-options.json'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 And a `wpt-options.json` file containing:
