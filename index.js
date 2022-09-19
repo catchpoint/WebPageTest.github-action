@@ -80,7 +80,7 @@ async function renderComment(data) {
       body: markdown,
     });
   } catch (e) {
-    console.log(e);
+    console.log(e.Error);
     core.setFailed(`Action failed with error: ${e.statusText || JSON.stringify(e)}`);
   }
 }
@@ -192,12 +192,12 @@ async function run() {
               return;
             }
           } catch (e) {
-            console.log(e);
+            console.log(e.Error);
             core.setFailed(`Action failed with error: ${e.statusText || JSON.stringify(e)}`);
           }
         });
       } catch (e) {
-        console.log(e);
+        console.log(e.Error);
         core.setFailed(`Action failed with error: ${e.statusText || JSON.stringify(e)}`);
       }
     })
