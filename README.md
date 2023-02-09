@@ -15,7 +15,7 @@ WebPageTest's GitHub Action lets you automatically run tests against WebPageTest
 
 ## Using the Action
 
-1. [Get a WebPageTest API Key](https://app.webpagetest.org/ui/entry/wpt/signup?enableSub=true&utm_source=docs&utm_medium=github&utm_campaign=ghactions&utm_content=account) and store it [as a secret in your repository's settings](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository).
+1. [Get a WebPageTest API Key](https://www.webpagetest.org/signup) and store it [as a secret in your repository's settings](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository).
 
 ![WPT_API_KEY Secret in repo settings](/images/wpt-action-api-secret.png)
 
