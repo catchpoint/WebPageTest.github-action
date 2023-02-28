@@ -8,6 +8,9 @@ inputs:
   urls:
     description: 'List of URL(s) to test'
     required: true
+  vercelSecret:
+    description: 'Secret to bypass vercel login'
+    required: true    
   budget:
     description: 'Path to WebPageTest testspecs.json file'
     required: false
