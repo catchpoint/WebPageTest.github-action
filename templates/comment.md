@@ -8,3 +8,5 @@ Automatically triggered by [WebPageTest](https://www.webpagetest.org)'s GitHub A
 | <% test.metrics.forEach((metric) => { %><%- metric.name %> | <% }); %>
 | <% test.metrics.forEach((metric) => { %>--- | <% }); %>
 | <% test.metrics.forEach((metric) => { %><%- metric.value %> | <% }); %>
+
+<% }); %>
