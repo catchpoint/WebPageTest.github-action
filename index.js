@@ -128,6 +128,7 @@ async function run() {
     pollResults: 5,
     timeout: 240,
     emulateMobile: true,
+    device: "GalaxyS8"
   };
   if (WPT_OPTIONS) {
     let settings = require(`${DIRECTORY}/${WPT_OPTIONS}`);
