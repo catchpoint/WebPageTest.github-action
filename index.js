@@ -8,6 +8,7 @@ const { keyword } = require("color-convert");
 const WPT_BUDGET = core.getInput("budget");
 const WPT_OPTIONS = core.getInput("wptOptions");
 const WPT_API_KEY = core.getInput("apiKey");
+const VERCEL_API_KEY = core.getInput("vercelSecret");
 const WPT_URLS = core.getInput("urls").split("\n");
 const WPT_LABEL = core.getInput("label");
 const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
