@@ -23,13 +23,25 @@ const METRICS = {
 
 const isReportSupported = () => GH_EVENT_NAME == "pull_request" || GH_EVENT_NAME == "issue_comment";
 
+const script = wpt.scriptToString([
+    { setHeader: "x-vercel-protection-bypass: " + VERCEL_API_KEY },
+    { navigate: url },
+    "waitForComplete",
+]);
+
 const runTest = (wpt, url, options) => {
+
+  let script = wpt.scriptToString([
+      { setHeader: "x-vercel-protection-bypass: " + VERCEL_API_KEY },
+      { navigate: url },
+      "waitForComplete",
+  ]);
   // clone options object to avoid WPT wrapper issue
   let tempOptions = JSON.parse(JSON.stringify(options));
 
   return new Promise((resolve, reject) => {
     core.info(`Submitting test for ${url} ...`);
-    wpt.runTest(url, tempOptions, async (err, result) => {
+    wpt.runTest(script, tempOptions, async (err, result) => {
       try {
         if (result) {
           core.debug(result);
