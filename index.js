@@ -128,6 +128,7 @@ async function run() {
     pollResults: 5,
     timeout: 240,
     emulateMobile: true,
+    sensitive: true,
     device: "GalaxyS8"
   };
   if (WPT_OPTIONS) {
