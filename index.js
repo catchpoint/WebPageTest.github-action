@@ -27,7 +27,7 @@ const isReportSupported = () => GH_EVENT_NAME == "pull_request" || GH_EVENT_NAME
 const runTest = (wpt, url, options) => {
 
   let script = wpt.scriptToString([
-      { setHeader: "x-vercel-protection-bypass: " + VERCEL_API_KEY },
+      { setHeader: `x-vercel-protection-bypass: ${VERCEL_API_KEY}`},
       { navigate: url },
       "waitForComplete",
   ]);
