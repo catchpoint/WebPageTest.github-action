@@ -123,7 +123,7 @@ async function run() {
   let options = {
     firstViewOnly: true,
     runs: 3,
-    location: "Dulles:Chrome",
+    location: "ec2-ap-southeast-1",
     connectivity: "4G",
     pollResults: 5,
     timeout: 240,
