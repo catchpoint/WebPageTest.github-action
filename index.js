@@ -216,11 +216,7 @@ async function run() {
         core.setFailed(`Action failed with error: ${e.statusText || JSON.stringify(e)}`);
       }
     })
-  ).then(() => {
-    if (isReportSupported()) {
-      renderComment(runData);
-    }
-  });
+  );
 
   return;
 }
