@@ -1,3 +1,4 @@
+const fs = require("fs");
 const WebPageTest = require("webpagetest");
 const core = require("@actions/core");
 const github = require("@actions/github");
@@ -10,6 +11,7 @@ const WPT_OPTIONS = core.getInput("wptOptions");
 const WPT_API_KEY = core.getInput("apiKey");
 const WPT_URLS = core.getInput("urls").split("\n");
 const WPT_LABEL = core.getInput("label");
+const WPT_COMMENT_TEMPLATE = core.getInput("commentTemplate");
 const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
 const DIRECTORY = process.env.GITHUB_WORKSPACE;
 const GH_EVENT_NAME = process.env.GITHUB_EVENT_NAME;
@@ -59,9 +61,7 @@ async function renderComment(data) {
   try {
     const octokit = github.getOctokit(GITHUB_TOKEN, { log: console });
     const context = github.context;
-
-    let markdown = await ejs.renderFile(`${__dirname}/templates/comment.md`, data);
-    markdown.replace(/\%/g, "%25").replace(/\n/g, "%0A").replace(/\r/g, "%0D");
+    let markdown = await _renderComment(data);
 
     const prNumber =
       GH_EVENT_NAME == "pull_request"
@@ -84,6 +84,26 @@ async function renderComment(data) {
     core.setFailed(`Action failed with error: ${e.statusText || JSON.stringify(e)}`);
   }
 }
+
+async function _renderComment(data) {
+  const template = getTemplate();
+  let markdown = await ejs.render(template, data);
+  markdown.replace(/\%/g, "%25").replace(/\n/g, "%0A").replace(/\r/g, "%0D");
+
+  return markdown;
+}
+
+function getTemplate() {
+  if (WPT_COMMENT_TEMPLATE && fs.existsSync(`${DIRECTORY}/${WPT_COMMENT_TEMPLATE}`)) {
+    // The user has specified a template path and it exists in the codebase
+    // read the file and return the contents.
+    return fs.readFileSync(`${DIRECTORY}/${WPT_COMMENT_TEMPLATE}`, "utf8");
+  }
+
+  return fs.readFileSync(`${__dirname}/templates/comment.md`, "utf8");
+}
+
+
 function collectData(results, runData) {
   let testData = {
     url: results.data.url,
