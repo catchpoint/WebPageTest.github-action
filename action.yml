@@ -22,7 +22,7 @@ inputs:
     default: ${{ github.token }}
 runs:
   using: 'node18'
-  main: 'index.js'
+  main: 'dist/index.js'
 branding:
   icon: 'bar-chart-2'
   color: 'blue'
