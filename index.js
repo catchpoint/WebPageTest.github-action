@@ -1,3 +1,4 @@
+const fs = require("fs");
 const WebPageTest = require("webpagetest");
 const core = require("@actions/core");
 const github = require("@actions/github");
