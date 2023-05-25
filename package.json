@@ -6,7 +6,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild index.js --bundle --minify --platform=node --external:\"./reporters/parallel-buffered\" --external:\"./worker.js\" --loader:.node=file --outfile=dist/index.js",
+    "build": "npm run clean && npm run build:bundle",
+    "build:bundle": "esbuild index.js --bundle --minify --platform=node --external:\"./reporters/parallel-buffered\" --external:\"./worker.js\" --loader:.node=file --outfile=dist/index.js",
     "clean": "rimraf dist"
   },
   "repository": {
