@@ -94,16 +94,10 @@ async function _renderComment(data) {
 }
 
 function getTemplate() {
-  if (WPT_COMMENT_TEMPLATE && fs.existsSync(WPT_COMMENT_TEMPLATE)) {
+  if (WPT_COMMENT_TEMPLATE && fs.existsSync(`${DIRECTORY}/${WPT_COMMENT_TEMPLATE}`)) {
     // The user has specified a template path and it exists in the codebase
     // read the file and return the contents.
-    return fs.readFileSync(WPT_COMMENT_TEMPLATE, "utf8");
-  }
-  else if (WPT_COMMENT_TEMPLATE && !fs.existsSync(WPT_COMMENT_TEMPLATE)) {
-    // The user has specified a template but it is not a path, so make the
-    // assumption that it is a valid markdown and ejs string that can be
-    // compiled with ejs.render()
-    return WPT_COMMENT_TEMPLATE;
+    return fs.readFileSync(`${DIRECTORY}/${WPT_COMMENT_TEMPLATE}`, "utf8");
   }
 
   return fs.readFileSync(`${__dirname}/templates/comment.md`, "utf8");
