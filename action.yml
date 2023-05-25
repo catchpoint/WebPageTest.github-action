@@ -17,6 +17,9 @@ inputs:
   wptOptions:
     description: 'Path to JSON file with WebPageTest test options (see https://github.com/marcelduran/webpagetest-api#test-works-for-runtest-method-only)'
     required: false
+  commentTemplate:
+    description: 'Path to a markdown file or ejs template string that will be used as the comment template.  For more, see https://ejs.co/ and https://github.com/adaptdk/webpagetest-github-action/blob/main/templates/comment.md'
+    required: false
   GITHUB_TOKEN:
     description: 'Secret GitHub Token (automatically provided by GitHub)'
     default: ${{ github.token }}
