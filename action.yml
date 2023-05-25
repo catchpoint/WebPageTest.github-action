@@ -24,7 +24,7 @@ inputs:
     description: 'Secret GitHub Token (automatically provided by GitHub)'
     default: ${{ github.token }}
 runs:
-  using: 'node18'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: 'bar-chart-2'
