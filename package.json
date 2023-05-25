@@ -2,9 +2,12 @@
   "name": "webpagetest-github-action",
   "version": "1.0.0",
   "description": "Official WebPageTest GitHub Action",
-  "main": "index.js",
+  "source": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild index.js --bundle --minify --platform=node --external:\"./reporters/parallel-buffered\" --external:\"./worker.js\" --loader:.node=file --outfile=dist/index.js",
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -19,7 +22,16 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^5.0.3",
+    "color-convert": "^2.0.1",
+    "color-name": "^2.0.0",
     "ejs": "^3.1.6",
     "webpagetest": "^0.6.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.17.19",
+    "rimraf": "^5.0.1"
+  },
+  "engines": {
+    "node": ">=18.13.0"
   }
 }
