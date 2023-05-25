@@ -97,6 +97,7 @@ function getTemplate() {
   console.log(WPT_COMMENT_TEMPLATE);
   console.log(`${DIRECTORY}/${WPT_COMMENT_TEMPLATE}`);
   console.log(fs.readdirSync(`${DIRECTORY}/${WPT_COMMENT_TEMPLATE}`));
+  console.log(fs.readdirSync(`${DIRECTORY}`));
   if (WPT_COMMENT_TEMPLATE && fs.existsSync(`${DIRECTORY}/${WPT_COMMENT_TEMPLATE}`)) {
     // The user has specified a template path and it exists in the codebase
     // read the file and return the contents.
