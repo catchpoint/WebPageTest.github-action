@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run clean && npm run build:bundle",
-    "build:bundle": "esbuild index.js --bundle --minify --platform=node --external:\"./reporters/parallel-buffered\" --external:\"./worker.js\" --loader:.node=file --outfile=dist/index.js",
+    "build:bundle": "./build.mjs",
     "clean": "rimraf dist"
   },
   "repository": {
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "esbuild": "0.17.19",
+    "esbuild-plugin-copy": "^2.1.1",
     "rimraf": "^5.0.1"
   },
   "engines": {
