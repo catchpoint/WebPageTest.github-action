@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _consoleFunc = require('./internal/consoleFunc.js');
@@ -40,4 +40,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * {hello: 'world'}
  */
 exports.default = (0, _consoleFunc2.default)('dir');
-module.exports = exports['default'];
+module.exports = exports.default;

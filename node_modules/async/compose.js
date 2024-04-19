@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = compose;
 
@@ -50,6 +50,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * });
  */
 function compose(...args) {
-  return (0, _seq2.default)(...args.reverse());
+    return (0, _seq2.default)(...args.reverse());
 }
-module.exports = exports['default'];
+module.exports = exports.default;

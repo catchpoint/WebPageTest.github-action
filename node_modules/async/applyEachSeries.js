@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _applyEach = require('./internal/applyEach.js');
@@ -34,4 +34,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * a callback.
  */
 exports.default = (0, _applyEach2.default)(_mapSeries2.default);
-module.exports = exports['default'];
+module.exports = exports.default;

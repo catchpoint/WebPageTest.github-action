@@ -28,7 +28,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @method
  * @category Control Flow
  * @param {AsyncFunction} test - asynchronous truth test to perform before each
- * execution of `iteratee`. Invoked with ().
+ * execution of `iteratee`. Invoked with (callback).
  * @param {AsyncFunction} iteratee - An async function which is called each time
  * `test` passes. Invoked with (callback).
  * @param {Function} [callback] - A callback which is called after the test
@@ -75,4 +75,4 @@ function whilst(test, iteratee, callback) {
     return _test(check);
 }
 exports.default = (0, _awaitify2.default)(whilst, 3);
-module.exports = exports['default'];
+module.exports = exports.default;

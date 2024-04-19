@@ -23,4 +23,4 @@ function reject(eachfn, arr, _iteratee, callback) {
         });
     }, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

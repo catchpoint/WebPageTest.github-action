@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = groupBy;
 
@@ -103,6 +103,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  */
 function groupBy(coll, iteratee, callback) {
-  return (0, _groupByLimit2.default)(coll, Infinity, iteratee, callback);
+    return (0, _groupByLimit2.default)(coll, Infinity, iteratee, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

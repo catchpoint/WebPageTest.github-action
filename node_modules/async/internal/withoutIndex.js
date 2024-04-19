@@ -7,4 +7,4 @@ exports.default = _withoutIndex;
 function _withoutIndex(iteratee) {
     return (value, index, callback) => iteratee(value, callback);
 }
-module.exports = exports["default"];
+module.exports = exports.default;

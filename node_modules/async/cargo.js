@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = cargo;
 
@@ -58,6 +58,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * console.log('finished processing baz');
  */
 function cargo(worker, payload) {
-  return (0, _queue2.default)(worker, 1, payload);
+    return (0, _queue2.default)(worker, 1, payload);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

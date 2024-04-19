@@ -64,4 +64,4 @@ function ensureAsync(fn) {
         sync = false;
     };
 }
-module.exports = exports['default'];
+module.exports = exports.default;

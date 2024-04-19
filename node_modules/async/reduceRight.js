@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = reduceRight;
 
@@ -35,7 +35,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Promise} a promise, if no callback is passed
  */
 function reduceRight(array, memo, iteratee, callback) {
-  var reversed = [...array].reverse();
-  return (0, _reduce2.default)(reversed, memo, iteratee, callback);
+    var reversed = [...array].reverse();
+    return (0, _reduce2.default)(reversed, memo, iteratee, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

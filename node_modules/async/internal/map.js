@@ -27,4 +27,4 @@ function _asyncMap(eachfn, arr, iteratee, callback) {
         callback(err, results);
     });
 }
-module.exports = exports['default'];
+module.exports = exports.default;

@@ -58,4 +58,4 @@ function mapValuesLimit(obj, limit, iteratee, callback) {
 }
 
 exports.default = (0, _awaitify2.default)(mapValuesLimit, 4);
-module.exports = exports['default'];
+module.exports = exports.default;

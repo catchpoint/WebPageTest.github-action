@@ -86,4 +86,4 @@ function timeout(asyncFn, milliseconds, info) {
         fn(...args);
     });
 }
-module.exports = exports['default'];
+module.exports = exports.default;

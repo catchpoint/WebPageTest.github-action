@@ -150,4 +150,4 @@ function reduce(coll, memo, iteratee, callback) {
     }, err => callback(err, memo));
 }
 exports.default = (0, _awaitify2.default)(reduce, 4);
-module.exports = exports['default'];
+module.exports = exports.default;

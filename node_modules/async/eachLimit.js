@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _eachOfLimit = require('./internal/eachOfLimit.js');
@@ -44,7 +44,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Promise} a promise, if a callback is omitted
  */
 function eachLimit(coll, limit, iteratee, callback) {
-  return (0, _eachOfLimit2.default)(limit)(coll, (0, _withoutIndex2.default)((0, _wrapAsync2.default)(iteratee)), callback);
+    return (0, _eachOfLimit2.default)(limit)(coll, (0, _withoutIndex2.default)((0, _wrapAsync2.default)(iteratee)), callback);
 }
 exports.default = (0, _awaitify2.default)(eachLimit, 4);
-module.exports = exports['default'];
+module.exports = exports.default;

@@ -64,4 +64,4 @@ function race(tasks, callback) {
 }
 
 exports.default = (0, _awaitify2.default)(race, 2);
-module.exports = exports['default'];
+module.exports = exports.default;

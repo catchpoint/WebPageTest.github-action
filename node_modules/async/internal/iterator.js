@@ -54,4 +54,4 @@ function createIterator(coll) {
     var iterator = (0, _getIterator2.default)(coll);
     return iterator ? createES2015Iterator(iterator) : createObjectIterator(coll);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

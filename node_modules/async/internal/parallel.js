@@ -31,4 +31,4 @@ exports.default = (0, _awaitify2.default)((eachfn, tasks, callback) => {
         });
     }, err => callback(err, results));
 }, 3);
-module.exports = exports['default'];
+module.exports = exports.default;

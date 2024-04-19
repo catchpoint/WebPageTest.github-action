@@ -117,4 +117,4 @@ function smaller(x, y) {
         return x.pushCount < y.pushCount;
     }
 }
-module.exports = exports["default"];
+module.exports = exports.default;

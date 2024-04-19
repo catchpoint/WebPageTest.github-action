@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = times;
 
@@ -45,6 +45,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * });
  */
 function times(n, iteratee, callback) {
-  return (0, _timesLimit2.default)(n, Infinity, iteratee, callback);
+    return (0, _timesLimit2.default)(n, Infinity, iteratee, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

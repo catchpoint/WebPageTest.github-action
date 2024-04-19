@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _map2 = require('./internal/map.js');
@@ -39,7 +39,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Promise} a promise, if no callback is passed
  */
 function mapLimit(coll, limit, iteratee, callback) {
-  return (0, _map3.default)((0, _eachOfLimit2.default)(limit), coll, iteratee, callback);
+    return (0, _map3.default)((0, _eachOfLimit2.default)(limit), coll, iteratee, callback);
 }
 exports.default = (0, _awaitify2.default)(mapLimit, 4);
-module.exports = exports['default'];
+module.exports = exports.default;

@@ -52,4 +52,4 @@ function _filter(eachfn, coll, iteratee, callback) {
     var filter = (0, _isArrayLike2.default)(coll) ? filterArray : filterGeneric;
     return filter(eachfn, coll, (0, _wrapAsync2.default)(iteratee), callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

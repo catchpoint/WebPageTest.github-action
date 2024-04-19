@@ -76,4 +76,4 @@ function seq(...functions) {
         return cb[_promiseCallback.PROMISE_SYMBOL];
     };
 }
-module.exports = exports['default'];
+module.exports = exports.default;

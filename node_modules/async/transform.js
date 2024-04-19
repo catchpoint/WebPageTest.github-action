@@ -170,4 +170,4 @@ function transform(coll, accumulator, iteratee, callback) {
     }, err => callback(err, accumulator));
     return callback[_promiseCallback.PROMISE_SYMBOL];
 }
-module.exports = exports['default'];
+module.exports = exports.default;

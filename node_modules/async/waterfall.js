@@ -102,4 +102,4 @@ function waterfall(tasks, callback) {
 }
 
 exports.default = (0, _awaitify2.default)(waterfall);
-module.exports = exports['default'];
+module.exports = exports.default;

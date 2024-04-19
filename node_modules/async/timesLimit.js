@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = timesLimit;
 
@@ -37,7 +37,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Promise} a promise, if no callback is provided
  */
 function timesLimit(count, limit, iteratee, callback) {
-  var _iteratee = (0, _wrapAsync2.default)(iteratee);
-  return (0, _mapLimit2.default)((0, _range2.default)(count), limit, _iteratee, callback);
+    var _iteratee = (0, _wrapAsync2.default)(iteratee);
+    return (0, _mapLimit2.default)((0, _range2.default)(count), limit, _iteratee, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

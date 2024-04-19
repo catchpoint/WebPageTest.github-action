@@ -68,4 +68,4 @@ function groupByLimit(coll, limit, iteratee, callback) {
 }
 
 exports.default = (0, _awaitify2.default)(groupByLimit, 4);
-module.exports = exports['default'];
+module.exports = exports.default;

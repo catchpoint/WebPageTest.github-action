@@ -75,4 +75,4 @@ function reflect(fn) {
         return _fn.apply(this, args);
     });
 }
-module.exports = exports['default'];
+module.exports = exports.default;

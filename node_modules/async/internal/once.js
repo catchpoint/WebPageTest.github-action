@@ -14,4 +14,4 @@ function once(fn) {
     Object.assign(wrapper, fn);
     return wrapper;
 }
-module.exports = exports["default"];
+module.exports = exports.default;

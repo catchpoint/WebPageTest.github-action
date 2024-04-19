@@ -14,7 +14,7 @@ task('noActionNoPrereqs');
 
 desc('Top-level zerbofrangazoomy task');
 task('zerbofrangazoomy', function () {
-  console.log('Whaaaaaaaa? Ran the zerbofrangazoomy task!')
+  console.log('Whaaaaaaaa? Ran the zerbofrangazoomy task!');
 });
 
 desc('Task that throws');
@@ -237,7 +237,7 @@ namespace('fileTest', function () {
   desc('File task, run if the prereq file changes');
   task('touch-prereq', function () {
     fs.writeFileSync('foo/prereq.txt', 'UPDATED');
-  })
+  });
 
   desc('File task, has a preexisting file (with no associated task) as a prereq');
   file('foo/from-prereq.txt', ['fileTest:foo', 'foo/prereq.txt'], function () {
@@ -253,6 +253,21 @@ namespace('fileTest', function () {
     fs.writeFileSync('foo/bar/baz/bamf.txt', 'w00t');
   });
 
+  file('foo/output1.txt', ['foo'], () => {
+    fs.writeFileSync('foo/output1.txt', 'Contents of foo/output1.txt');
+  });
+
+  file('foo/output2a.txt', ['foo/output1.txt'], () => {
+    fs.writeFileSync('foo/output2a.txt', 'Contents of foo/output2a.txt');
+  });
+
+  file('foo/output2b.txt', ['foo/output1.txt'], () => {
+    fs.writeFileSync('foo/output2b.txt', 'Contents of foo/output2b.txt');
+  });
+
+  file('foo/output3.txt', [ 'foo/output2a.txt', 'foo/output2b.txt'], () => {
+    fs.writeFileSync('foo/output3.txt', 'w00t');
+  });
 });
 
 task('blammo');
@@ -332,6 +347,6 @@ namespace("large", function () {
 
   desc("Task with a large number of different prereqs");
   task("different", different, { concurrency: 2 } , function () {
-    console.log("large:different")
-  })
+    console.log("large:different");
+  });
 });

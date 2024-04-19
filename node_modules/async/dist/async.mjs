@@ -68,19 +68,19 @@ function wrap(defer) {
     return (fn, ...args) => defer(() => fn(...args));
 }
 
-var _defer;
+var _defer$1;
 
 if (hasQueueMicrotask) {
-    _defer = queueMicrotask;
+    _defer$1 = queueMicrotask;
 } else if (hasSetImmediate) {
-    _defer = setImmediate;
+    _defer$1 = setImmediate;
 } else if (hasNextTick) {
-    _defer = process.nextTick;
+    _defer$1 = process.nextTick;
 } else {
-    _defer = fallback;
+    _defer$1 = fallback;
 }
 
-var setImmediate$1 = wrap(_defer);
+var setImmediate$1 = wrap(_defer$1);
 
 /**
  * Take a sync function and make it async, passing its return value to a
@@ -167,7 +167,7 @@ function handlePromise(promise, callback) {
     return promise.then(value => {
         invokeCallback(callback, null, value);
     }, err => {
-        invokeCallback(callback, err && err.message ? err : new Error(err));
+        invokeCallback(callback, err && (err instanceof Error || err.message) ? err : new Error(err));
     });
 }
 
@@ -198,7 +198,8 @@ function wrapAsync(asyncFn) {
 
 // conditionally promisify a function.
 // only return a promise if a callback is omitted
-function awaitify (asyncFn, arity = asyncFn.length) {
+function awaitify (asyncFn, arity) {
+    if (!arity) arity = asyncFn.length;
     if (!arity) throw new Error('arity is undefined')
     function awaitable (...args) {
         if (typeof args[arity - 1] === 'function') {
@@ -217,7 +218,7 @@ function awaitify (asyncFn, arity = asyncFn.length) {
     return awaitable
 }
 
-function applyEach (eachfn) {
+function applyEach$1 (eachfn) {
     return function applyEach(fns, ...callArgs) {
         const go = awaitify(function (callback) {
             var that = this;
@@ -256,6 +257,7 @@ function isArrayLike(value) {
 // A temporary value used to identify if the loop should be broken.
 // See #1064, #1293
 const breakLoop = {};
+var breakLoop$1 = breakLoop;
 
 function once(fn) {
     function wrapper (...args) {
@@ -366,7 +368,7 @@ function asyncEachOfLimit(generator, limit, iteratee, callback) {
             return
         }
 
-        if (result === breakLoop || (done && running <= 0)) {
+        if (result === breakLoop$1 || (done && running <= 0)) {
             done = true;
             //console.log('done iterCb')
             return callback(null);
@@ -384,7 +386,7 @@ function asyncEachOfLimit(generator, limit, iteratee, callback) {
     replenish();
 }
 
-var eachOfLimit = (limit) => {
+var eachOfLimit$2 = (limit) => {
     return (obj, iteratee, callback) => {
         callback = once(callback);
         if (limit <= 0) {
@@ -416,7 +418,7 @@ var eachOfLimit = (limit) => {
                 done = true;
                 canceled = true;
             }
-            else if (value === breakLoop || (done && running <= 0)) {
+            else if (value === breakLoop$1 || (done && running <= 0)) {
                 done = true;
                 return callback(null);
             }
@@ -467,11 +469,11 @@ var eachOfLimit = (limit) => {
  * `iteratee` functions have finished, or an error occurs. Invoked with (err).
  * @returns {Promise} a promise, if a callback is omitted
  */
-function eachOfLimit$1(coll, limit, iteratee, callback) {
-    return eachOfLimit(limit)(coll, wrapAsync(iteratee), callback);
+function eachOfLimit(coll, limit, iteratee, callback) {
+    return eachOfLimit$2(limit)(coll, wrapAsync(iteratee), callback);
 }
 
-var eachOfLimit$2 = awaitify(eachOfLimit$1, 4);
+var eachOfLimit$1 = awaitify(eachOfLimit, 4);
 
 // eachOf implementation optimized for array-likes
 function eachOfArrayLike(coll, iteratee, callback) {
@@ -491,7 +493,7 @@ function eachOfArrayLike(coll, iteratee, callback) {
         if (canceled === true) return
         if (err) {
             callback(err);
-        } else if ((++completed === length) || value === breakLoop) {
+        } else if ((++completed === length) || value === breakLoop$1) {
             callback(null);
         }
     }
@@ -503,7 +505,7 @@ function eachOfArrayLike(coll, iteratee, callback) {
 
 // a generic version of eachOf which can handle array, object, and iterator cases.
 function eachOfGeneric (coll, iteratee, callback) {
-    return eachOfLimit$2(coll, Infinity, iteratee, callback);
+    return eachOfLimit$1(coll, Infinity, iteratee, callback);
 }
 
 /**
@@ -783,7 +785,7 @@ var map$1 = awaitify(map, 3);
  *     callback
  * );
  */
-var applyEach$1 = applyEach(map$1);
+var applyEach = applyEach$1(map$1);
 
 /**
  * The same as [`eachOf`]{@link module:Collections.eachOf} but runs only a single async operation at a time.
@@ -804,7 +806,7 @@ var applyEach$1 = applyEach(map$1);
  * @returns {Promise} a promise, if a callback is omitted
  */
 function eachOfSeries(coll, iteratee, callback) {
-    return eachOfLimit$2(coll, 1, iteratee, callback)
+    return eachOfLimit$1(coll, 1, iteratee, callback)
 }
 var eachOfSeries$1 = awaitify(eachOfSeries, 3);
 
@@ -851,7 +853,7 @@ var mapSeries$1 = awaitify(mapSeries, 3);
  * appling the `args` to the list of functions.  It takes no args, other than
  * a callback.
  */
-var applyEachSeries = applyEach(mapSeries$1);
+var applyEachSeries = applyEach$1(mapSeries$1);
 
 const PROMISE_SYMBOL = Symbol('promiseCallback');
 
@@ -1449,7 +1451,7 @@ function setInitial(dll, node) {
     dll.head = dll.tail = node;
 }
 
-function queue(worker, concurrency, payload) {
+function queue$1(worker, concurrency, payload) {
     if (concurrency == null) {
         concurrency = 1;
     }
@@ -1767,8 +1769,8 @@ function queue(worker, concurrency, payload) {
  * await cargo.push({name: 'baz'});
  * console.log('finished processing baz');
  */
-function cargo(worker, payload) {
-    return queue(worker, 1, payload);
+function cargo$1(worker, payload) {
+    return queue$1(worker, 1, payload);
 }
 
 /**
@@ -1825,8 +1827,8 @@ function cargo(worker, payload) {
  *     console.log('finished processing boo');
  * });
  */
-function cargo$1(worker, concurrency, payload) {
-    return queue(worker, concurrency, payload);
+function cargo(worker, concurrency, payload) {
+    return queue$1(worker, concurrency, payload);
 }
 
 /**
@@ -2082,7 +2084,7 @@ function compose(...args) {
  * @returns {Promise} a promise, if no callback is passed
  */
 function mapLimit (coll, limit, iteratee, callback) {
-    return _asyncMap(eachOfLimit(limit), coll, iteratee, callback)
+    return _asyncMap(eachOfLimit$2(limit), coll, iteratee, callback)
 }
 var mapLimit$1 = awaitify(mapLimit, 4);
 
@@ -2292,7 +2294,7 @@ var concatSeries$1 = awaitify(concatSeries, 3);
  *     //...
  * }, callback);
  */
-function constant(...args) {
+function constant$1(...args) {
     return function (...ignoredArgs/*, callback*/) {
         var callback = ignoredArgs.pop();
         return callback(null, ...args);
@@ -2311,7 +2313,7 @@ function _createTester(check, getResult) {
                 if (check(result) && !testResult) {
                     testPassed = true;
                     testResult = getResult(true, value);
-                    return callback(null, breakLoop);
+                    return callback(null, breakLoop$1);
                 }
                 callback();
             });
@@ -2422,7 +2424,7 @@ var detect$1 = awaitify(detect, 3);
  * @returns {Promise} a promise, if a callback is omitted
  */
 function detectLimit(coll, limit, iteratee, callback) {
-    return _createTester(bool => bool, (res, item) => item)(eachOfLimit(limit), coll, iteratee, callback)
+    return _createTester(bool => bool, (res, item) => item)(eachOfLimit$2(limit), coll, iteratee, callback)
 }
 var detectLimit$1 = awaitify(detectLimit, 4);
 
@@ -2448,7 +2450,7 @@ var detectLimit$1 = awaitify(detectLimit, 4);
  * @returns {Promise} a promise, if a callback is omitted
  */
 function detectSeries(coll, iteratee, callback) {
-    return _createTester(bool => bool, (res, item) => item)(eachOfLimit(1), coll, iteratee, callback)
+    return _createTester(bool => bool, (res, item) => item)(eachOfLimit$2(1), coll, iteratee, callback)
 }
 
 var detectSeries$1 = awaitify(detectSeries, 3);
@@ -2681,11 +2683,11 @@ function _withoutIndex(iteratee) {
  * }
  *
  */
-function eachLimit(coll, iteratee, callback) {
+function eachLimit$2(coll, iteratee, callback) {
     return eachOf$1(coll, _withoutIndex(wrapAsync(iteratee)), callback);
 }
 
-var each = awaitify(eachLimit, 3);
+var each = awaitify(eachLimit$2, 3);
 
 /**
  * The same as [`each`]{@link module:Collections.each} but runs a maximum of `limit` async operations at a time.
@@ -2708,10 +2710,10 @@ var each = awaitify(eachLimit, 3);
  * `iteratee` functions have finished, or an error occurs. Invoked with (err).
  * @returns {Promise} a promise, if a callback is omitted
  */
-function eachLimit$1(coll, limit, iteratee, callback) {
-    return eachOfLimit(limit)(coll, _withoutIndex(wrapAsync(iteratee)), callback);
+function eachLimit(coll, limit, iteratee, callback) {
+    return eachOfLimit$2(limit)(coll, _withoutIndex(wrapAsync(iteratee)), callback);
 }
-var eachLimit$2 = awaitify(eachLimit$1, 4);
+var eachLimit$1 = awaitify(eachLimit, 4);
 
 /**
  * The same as [`each`]{@link module:Collections.each} but runs only a single async operation at a time.
@@ -2737,7 +2739,7 @@ var eachLimit$2 = awaitify(eachLimit$1, 4);
  * @returns {Promise} a promise, if a callback is omitted
  */
 function eachSeries(coll, iteratee, callback) {
-    return eachLimit$2(coll, 1, iteratee, callback)
+    return eachLimit$1(coll, 1, iteratee, callback)
 }
 var eachSeries$1 = awaitify(eachSeries, 3);
 
@@ -2914,7 +2916,7 @@ var every$1 = awaitify(every, 3);
  * @returns {Promise} a promise, if no callback provided
  */
 function everyLimit(coll, limit, iteratee, callback) {
-    return _createTester(bool => !bool, res => !res)(eachOfLimit(limit), coll, iteratee, callback)
+    return _createTester(bool => !bool, res => !res)(eachOfLimit$2(limit), coll, iteratee, callback)
 }
 var everyLimit$1 = awaitify(everyLimit, 4);
 
@@ -3077,7 +3079,7 @@ var filter$1 = awaitify(filter, 3);
  * @returns {Promise} a promise, if no callback provided
  */
 function filterLimit (coll, limit, iteratee, callback) {
-    return _filter(eachOfLimit(limit), coll, iteratee, callback)
+    return _filter(eachOfLimit$2(limit), coll, iteratee, callback)
 }
 var filterLimit$1 = awaitify(filterLimit, 4);
 
@@ -3372,7 +3374,7 @@ function mapValuesLimit(obj, limit, iteratee, callback) {
     callback = once(callback);
     var newObj = {};
     var _iteratee = wrapAsync(iteratee);
-    return eachOfLimit(limit)(obj, (val, key, next) => {
+    return eachOfLimit$2(limit)(obj, (val, key, next) => {
         _iteratee(val, key, (err, result) => {
             if (err) return next(err);
             newObj[key] = result;
@@ -3649,19 +3651,19 @@ function memoize(fn, hasher = v => v) {
  *     // a, b, and c equal 1, 2, and 3
  * }, 1, 2, 3);
  */
-var _defer$1;
+var _defer;
 
 if (hasNextTick) {
-    _defer$1 = process.nextTick;
+    _defer = process.nextTick;
 } else if (hasSetImmediate) {
-    _defer$1 = setImmediate;
+    _defer = setImmediate;
 } else {
-    _defer$1 = fallback;
+    _defer = fallback;
 }
 
-var nextTick = wrap(_defer$1);
+var nextTick = wrap(_defer);
 
-var parallel = awaitify((eachfn, tasks, callback) => {
+var _parallel = awaitify((eachfn, tasks, callback) => {
     var results = isArrayLike(tasks) ? [] : {};
 
     eachfn(tasks, (task, key, taskCb) => {
@@ -3834,8 +3836,8 @@ var parallel = awaitify((eachfn, tasks, callback) => {
  * }
  *
  */
-function parallel$1(tasks, callback) {
-    return parallel(eachOf$1, tasks, callback);
+function parallel(tasks, callback) {
+    return _parallel(eachOf$1, tasks, callback);
 }
 
 /**
@@ -3859,7 +3861,7 @@ function parallel$1(tasks, callback) {
  * @returns {Promise} a promise, if a callback is not passed
  */
 function parallelLimit(tasks, limit, callback) {
-    return parallel(eachOfLimit(limit), tasks, callback);
+    return _parallel(eachOfLimit$2(limit), tasks, callback);
 }
 
 /**
@@ -4004,9 +4006,9 @@ function parallelLimit(tasks, limit, callback) {
  *     console.log('finished processing bar');
  * });
  */
-function queue$1 (worker, concurrency) {
+function queue (worker, concurrency) {
     var _worker = wrapAsync(worker);
-    return queue((items, cb) => {
+    return queue$1((items, cb) => {
         _worker(items[0], cb);
     }, concurrency, 1);
 }
@@ -4153,7 +4155,7 @@ function smaller(x, y) {
  */
 function priorityQueue(worker, concurrency) {
     // Start with a normal queue
-    var q = queue$1(worker, concurrency);
+    var q = queue(worker, concurrency);
 
     var {
         push,
@@ -4408,7 +4410,7 @@ function reflectAll(tasks) {
     return results;
 }
 
-function reject(eachfn, arr, _iteratee, callback) {
+function reject$2(eachfn, arr, _iteratee, callback) {
     const iteratee = wrapAsync(_iteratee);
     return _filter(eachfn, arr, (value, cb) => {
         iteratee(value, (err, v) => {
@@ -4479,10 +4481,10 @@ function reject(eachfn, arr, _iteratee, callback) {
  * }
  *
  */
-function reject$1 (coll, iteratee, callback) {
-    return reject(eachOf$1, coll, iteratee, callback)
+function reject (coll, iteratee, callback) {
+    return reject$2(eachOf$1, coll, iteratee, callback)
 }
-var reject$2 = awaitify(reject$1, 3);
+var reject$1 = awaitify(reject, 3);
 
 /**
  * The same as [`reject`]{@link module:Collections.reject} but runs a maximum of `limit` async operations at a
@@ -4505,7 +4507,7 @@ var reject$2 = awaitify(reject$1, 3);
  * @returns {Promise} a promise, if no callback is passed
  */
 function rejectLimit (coll, limit, iteratee, callback) {
-    return reject(eachOfLimit(limit), coll, iteratee, callback)
+    return reject$2(eachOfLimit$2(limit), coll, iteratee, callback)
 }
 var rejectLimit$1 = awaitify(rejectLimit, 4);
 
@@ -4528,11 +4530,11 @@ var rejectLimit$1 = awaitify(rejectLimit, 4);
  * @returns {Promise} a promise, if no callback is passed
  */
 function rejectSeries (coll, iteratee, callback) {
-    return reject(eachOfSeries$1, coll, iteratee, callback)
+    return reject$2(eachOfSeries$1, coll, iteratee, callback)
 }
 var rejectSeries$1 = awaitify(rejectSeries, 3);
 
-function constant$1(value) {
+function constant(value) {
     return function () {
         return value;
     }
@@ -4629,7 +4631,7 @@ const DEFAULT_INTERVAL = 0;
 function retry(opts, task, callback) {
     var options = {
         times: DEFAULT_TIMES,
-        intervalFunc: constant$1(DEFAULT_INTERVAL)
+        intervalFunc: constant(DEFAULT_INTERVAL)
     };
 
     if (arguments.length < 3 && typeof opts === 'function') {
@@ -4670,7 +4672,7 @@ function parseTimes(acc, t) {
 
         acc.intervalFunc = typeof t.interval === 'function' ?
             t.interval :
-            constant$1(+t.interval || DEFAULT_INTERVAL);
+            constant(+t.interval || DEFAULT_INTERVAL);
 
         acc.errorFilter = t.errorFilter;
     } else if (typeof t === 'number' || typeof t === 'string') {
@@ -4901,7 +4903,7 @@ function retryable (opts, task) {
  *
  */
 function series(tasks, callback) {
-    return parallel(eachOfSeries$1, tasks, callback);
+    return _parallel(eachOfSeries$1, tasks, callback);
 }
 
 /**
@@ -5029,7 +5031,7 @@ var some$1 = awaitify(some, 3);
  * @returns {Promise} a promise, if no callback provided
  */
 function someLimit(coll, limit, iteratee, callback) {
-    return _createTester(Boolean, res => res)(eachOfLimit(limit), coll, iteratee, callback)
+    return _createTester(Boolean, res => res)(eachOfLimit$2(limit), coll, iteratee, callback)
 }
 var someLimit$1 = awaitify(someLimit, 4);
 
@@ -5623,7 +5625,7 @@ function unmemoize(fn) {
  * @method
  * @category Control Flow
  * @param {AsyncFunction} test - asynchronous truth test to perform before each
- * execution of `iteratee`. Invoked with ().
+ * execution of `iteratee`. Invoked with (callback).
  * @param {AsyncFunction} iteratee - An async function which is called each time
  * `test` passes. Invoked with (callback).
  * @param {Function} [callback] - A callback which is called after the test
@@ -5835,20 +5837,21 @@ var waterfall$1 = awaitify(waterfall);
  * @static
  */
 
+
 var index = {
     apply,
-    applyEach: applyEach$1,
+    applyEach,
     applyEachSeries,
     asyncify,
     auto,
     autoInject,
-    cargo,
-    cargoQueue: cargo$1,
+    cargo: cargo$1,
+    cargoQueue: cargo,
     compose,
     concat: concat$1,
     concatLimit: concatLimit$1,
     concatSeries: concatSeries$1,
-    constant,
+    constant: constant$1,
     detect: detect$1,
     detectLimit: detectLimit$1,
     detectSeries: detectSeries$1,
@@ -5856,9 +5859,9 @@ var index = {
     doUntil,
     doWhilst: doWhilst$1,
     each,
-    eachLimit: eachLimit$2,
+    eachLimit: eachLimit$1,
     eachOf: eachOf$1,
-    eachOfLimit: eachOfLimit$2,
+    eachOfLimit: eachOfLimit$1,
     eachOfSeries: eachOfSeries$1,
     eachSeries: eachSeries$1,
     ensureAsync,
@@ -5881,16 +5884,16 @@ var index = {
     mapValuesSeries,
     memoize,
     nextTick,
-    parallel: parallel$1,
+    parallel,
     parallelLimit,
     priorityQueue,
-    queue: queue$1,
+    queue,
     race: race$1,
     reduce: reduce$1,
     reduceRight,
     reflect,
     reflectAll,
-    reject: reject$2,
+    reject: reject$1,
     rejectLimit: rejectLimit$1,
     rejectSeries: rejectSeries$1,
     retry,
@@ -5928,10 +5931,10 @@ var index = {
     flatMapSeries: concatSeries$1,
     forEach: each,
     forEachSeries: eachSeries$1,
-    forEachLimit: eachLimit$2,
+    forEachLimit: eachLimit$1,
     forEachOf: eachOf$1,
     forEachOfSeries: eachOfSeries$1,
-    forEachOfLimit: eachOfLimit$2,
+    forEachOfLimit: eachOfLimit$1,
     inject: reduce$1,
     foldl: reduce$1,
     foldr: reduceRight,
@@ -5943,5 +5946,4 @@ var index = {
     doDuring: doWhilst$1
 };
 
-export default index;
-export { apply, applyEach$1 as applyEach, applyEachSeries, asyncify, auto, autoInject, cargo, cargo$1 as cargoQueue, compose, concat$1 as concat, concatLimit$1 as concatLimit, concatSeries$1 as concatSeries, constant, detect$1 as detect, detectLimit$1 as detectLimit, detectSeries$1 as detectSeries, dir, doUntil, doWhilst$1 as doWhilst, each, eachLimit$2 as eachLimit, eachOf$1 as eachOf, eachOfLimit$2 as eachOfLimit, eachOfSeries$1 as eachOfSeries, eachSeries$1 as eachSeries, ensureAsync, every$1 as every, everyLimit$1 as everyLimit, everySeries$1 as everySeries, filter$1 as filter, filterLimit$1 as filterLimit, filterSeries$1 as filterSeries, forever$1 as forever, groupBy, groupByLimit$1 as groupByLimit, groupBySeries, log, map$1 as map, mapLimit$1 as mapLimit, mapSeries$1 as mapSeries, mapValues, mapValuesLimit$1 as mapValuesLimit, mapValuesSeries, memoize, nextTick, parallel$1 as parallel, parallelLimit, priorityQueue, queue$1 as queue, race$1 as race, reduce$1 as reduce, reduceRight, reflect, reflectAll, reject$2 as reject, rejectLimit$1 as rejectLimit, rejectSeries$1 as rejectSeries, retry, retryable, seq, series, setImmediate$1 as setImmediate, some$1 as some, someLimit$1 as someLimit, someSeries$1 as someSeries, sortBy$1 as sortBy, timeout, times, timesLimit, timesSeries, transform, tryEach$1 as tryEach, unmemoize, until, waterfall$1 as waterfall, whilst$1 as whilst, every$1 as all, everyLimit$1 as allLimit, everySeries$1 as allSeries, some$1 as any, someLimit$1 as anyLimit, someSeries$1 as anySeries, detect$1 as find, detectLimit$1 as findLimit, detectSeries$1 as findSeries, concat$1 as flatMap, concatLimit$1 as flatMapLimit, concatSeries$1 as flatMapSeries, each as forEach, eachSeries$1 as forEachSeries, eachLimit$2 as forEachLimit, eachOf$1 as forEachOf, eachOfSeries$1 as forEachOfSeries, eachOfLimit$2 as forEachOfLimit, reduce$1 as inject, reduce$1 as foldl, reduceRight as foldr, filter$1 as select, filterLimit$1 as selectLimit, filterSeries$1 as selectSeries, asyncify as wrapSync, whilst$1 as during, doWhilst$1 as doDuring };
+export { every$1 as all, everyLimit$1 as allLimit, everySeries$1 as allSeries, some$1 as any, someLimit$1 as anyLimit, someSeries$1 as anySeries, apply, applyEach, applyEachSeries, asyncify, auto, autoInject, cargo$1 as cargo, cargo as cargoQueue, compose, concat$1 as concat, concatLimit$1 as concatLimit, concatSeries$1 as concatSeries, constant$1 as constant, index as default, detect$1 as detect, detectLimit$1 as detectLimit, detectSeries$1 as detectSeries, dir, doWhilst$1 as doDuring, doUntil, doWhilst$1 as doWhilst, whilst$1 as during, each, eachLimit$1 as eachLimit, eachOf$1 as eachOf, eachOfLimit$1 as eachOfLimit, eachOfSeries$1 as eachOfSeries, eachSeries$1 as eachSeries, ensureAsync, every$1 as every, everyLimit$1 as everyLimit, everySeries$1 as everySeries, filter$1 as filter, filterLimit$1 as filterLimit, filterSeries$1 as filterSeries, detect$1 as find, detectLimit$1 as findLimit, detectSeries$1 as findSeries, concat$1 as flatMap, concatLimit$1 as flatMapLimit, concatSeries$1 as flatMapSeries, reduce$1 as foldl, reduceRight as foldr, each as forEach, eachLimit$1 as forEachLimit, eachOf$1 as forEachOf, eachOfLimit$1 as forEachOfLimit, eachOfSeries$1 as forEachOfSeries, eachSeries$1 as forEachSeries, forever$1 as forever, groupBy, groupByLimit$1 as groupByLimit, groupBySeries, reduce$1 as inject, log, map$1 as map, mapLimit$1 as mapLimit, mapSeries$1 as mapSeries, mapValues, mapValuesLimit$1 as mapValuesLimit, mapValuesSeries, memoize, nextTick, parallel, parallelLimit, priorityQueue, queue, race$1 as race, reduce$1 as reduce, reduceRight, reflect, reflectAll, reject$1 as reject, rejectLimit$1 as rejectLimit, rejectSeries$1 as rejectSeries, retry, retryable, filter$1 as select, filterLimit$1 as selectLimit, filterSeries$1 as selectSeries, seq, series, setImmediate$1 as setImmediate, some$1 as some, someLimit$1 as someLimit, someSeries$1 as someSeries, sortBy$1 as sortBy, timeout, times, timesLimit, timesSeries, transform, tryEach$1 as tryEach, unmemoize, until, waterfall$1 as waterfall, whilst$1 as whilst, asyncify as wrapSync };

@@ -179,4 +179,4 @@ function autoInject(tasks, callback) {
 
     return (0, _auto2.default)(newTasks, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

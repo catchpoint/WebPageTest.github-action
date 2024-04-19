@@ -89,4 +89,4 @@ function setInitial(dll, node) {
     dll.length = 1;
     dll.head = dll.tail = node;
 }
-module.exports = exports["default"];
+module.exports = exports.default;

@@ -156,4 +156,4 @@ function parseTimes(acc, t) {
         throw new Error("Invalid arguments for async.retry");
     }
 }
-module.exports = exports['default'];
+module.exports = exports.default;

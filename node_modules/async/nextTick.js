@@ -49,4 +49,4 @@ if (_setImmediate.hasNextTick) {
 }
 
 exports.default = (0, _setImmediate.wrap)(_defer);
-module.exports = exports['default'];
+module.exports = exports.default;

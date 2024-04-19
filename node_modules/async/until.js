@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = until;
 
@@ -55,7 +55,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * })
  */
 function until(test, iteratee, callback) {
-  const _test = (0, _wrapAsync2.default)(test);
-  return (0, _whilst2.default)(cb => _test((err, truth) => cb(err, !truth)), iteratee, callback);
+    const _test = (0, _wrapAsync2.default)(test);
+    return (0, _whilst2.default)(cb => _test((err, truth) => cb(err, !truth)), iteratee, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

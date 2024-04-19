@@ -32,8 +32,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-      - name: WebPageTest
-        uses: WPO-Foundation/webpagetest-github-action@main
+      - name: WebPageTest      
+        uses: catchpoint/WebPageTest.github-action@main
         with:
           apiKey: ${{ secrets.WPT_API_KEY }}
           urls: |
@@ -62,7 +62,7 @@ The tests will be run with the following WebPageTest settings:
 However, WebPageTest is capable of going _very_ deep, and the GitHub Action provides a number of configuration settings to help fine-tune your tests and even fail a pull request if performance budgets aren't met.
 
 ### Setting performance budgets
-WebPageTest's GitHub Action uses the [WebPageTest API Wrapper for NodeJS](https://github.com/marcelduran/webpagetest-api) under the hood. The wrapper provides [test specs](https://github.com/marcelduran/webpagetest-api/wiki/Test-Specs) functionality that lets you set budgets on any of the metrics returned by the WebPageTest API.
+WebPageTest's GitHub Action uses the [WebPageTest API Wrapper for NodeJS](https://github.com/catchpoint/WebPageTest.api-nodejs) under the hood. The wrapper provides [test specs](https://github.com/catchpoint/WebPageTest.api-nodejs/wiki/Test-Specs) functionality that lets you set budgets on any of the metrics returned by the WebPageTest API.
 
 The GitHub Action lets you provide a path to a specs JSON file using the `budget` input. If a specs file is included, WebPageTest's GitHub Action will test the results against the budgets you've defined. If any budget isn't met, the tests will fail and you'll be provided with links to dig into the full WebPageTest results to see what was slowing things down.
 
@@ -80,7 +80,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: WebPageTest
-        uses: WPO-Foundation/webpagetest-github-action@main
+        uses: catchpoint/WebPageTest.github-action@main
         with:
           apiKey: ${{ secrets.WPT_API_KEY }}
           urls: |
@@ -106,7 +106,7 @@ WebPageTest would test each run's First Contentful Paint. If the First Contentfu
 
 ![Example of a WPT action failing the PR if a budget is exceeded](/images/wpt-action-fail-pr.png)
 
-The specs format provides tremendous flexiblity in which metrics you want to budget against. For more information, check out [the official documentation](https://github.com/marcelduran/webpagetest-api/wiki/Test-Specs).
+The specs format provides tremendous flexiblity in which metrics you want to budget against. For more information, check out [the official documentation](https://github.com/catchpoint/WebPageTest.api-nodejs/wiki/Test-Specs).
 
 ### Testing against a deployment URL
 If you are going to set and enforce performance budgets, **make sure to pass a preview URL** to test against to make sure that you're testing against the latest changes, not against a prior version of your site.
@@ -131,7 +131,7 @@ jobs:
           site_name: 'your-netlify-site-name'
 
       - name: WebPageTest
-        uses: WPO-Foundation/webpagetest-github-action@main
+        uses: catchpoint/WebPageTest.github-action@main
         with:
           apiKey: ${{ secrets.WPT_API_KEY }}
           urls: |
@@ -149,7 +149,7 @@ _If you are testing against a Netlify deployment preview, it's important to note
 ```
 
 ### Customizing your WebPageTest tests
-There are a _lot_ of [options available in WebPageTest](https://github.com/marcelduran/webpagetest-api#test-works-for-runtest-method-only) to customize your test results, record custom metrics, or do advanced scripting and multi-page flows.
+There are a _lot_ of [options available in WebPageTest](https://github.com/catchpoint/WebPageTest.api-nodejs#test-works-for-runtest-method-only) to customize your test results, record custom metrics, or do advanced scripting and multi-page flows.
 
 To give you the ability to customize you tests, the WebPageTest GitHub Action let's you provide the path to a JSON object with your test options, using the `wptOptions` input.
 
@@ -167,7 +167,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: WebPageTest
-        uses: WPO-Foundation/webpagetest-github-action@main
+        uses: catchpoint/WebPageTest.github-action@main
         with:
           apiKey: ${{ secrets.WPT_API_KEY }}
           urls: |

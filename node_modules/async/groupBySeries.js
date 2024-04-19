@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = groupBySeries;
 
@@ -31,6 +31,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Promise} a promise, if no callback is passed
  */
 function groupBySeries(coll, iteratee, callback) {
-  return (0, _groupByLimit2.default)(coll, 1, iteratee, callback);
+    return (0, _groupByLimit2.default)(coll, 1, iteratee, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

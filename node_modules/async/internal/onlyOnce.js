@@ -12,4 +12,4 @@ function onlyOnce(fn) {
         callFn.apply(this, args);
     };
 }
-module.exports = exports["default"];
+module.exports = exports.default;

@@ -182,4 +182,4 @@ function eachOf(coll, iteratee, callback) {
 }
 
 exports.default = (0, _awaitify2.default)(eachOf, 3);
-module.exports = exports['default'];
+module.exports = exports.default;

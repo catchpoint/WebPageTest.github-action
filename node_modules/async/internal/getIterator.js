@@ -8,4 +8,4 @@ exports.default = function (coll) {
     return coll[Symbol.iterator] && coll[Symbol.iterator]();
 };
 
-module.exports = exports["default"];
+module.exports = exports.default;

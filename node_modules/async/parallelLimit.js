@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = parallelLimit;
 
@@ -36,6 +36,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Promise} a promise, if a callback is not passed
  */
 function parallelLimit(tasks, limit, callback) {
-  return (0, _parallel2.default)((0, _eachOfLimit2.default)(limit), tasks, callback);
+    return (0, _parallel2.default)((0, _eachOfLimit2.default)(limit), tasks, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;

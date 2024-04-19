@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _setImmediate = require('./internal/setImmediate.js');
@@ -42,4 +42,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * }, 1, 2, 3);
  */
 exports.default = _setImmediate2.default;
-module.exports = exports['default'];
+module.exports = exports.default;

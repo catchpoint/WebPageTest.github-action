@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createTester = require('./internal/createTester.js');
@@ -40,8 +40,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Promise} a promise, if a callback is omitted
  */
 function detectSeries(coll, iteratee, callback) {
-  return (0, _createTester2.default)(bool => bool, (res, item) => item)((0, _eachOfLimit2.default)(1), coll, iteratee, callback);
+    return (0, _createTester2.default)(bool => bool, (res, item) => item)((0, _eachOfLimit2.default)(1), coll, iteratee, callback);
 }
 
 exports.default = (0, _awaitify2.default)(detectSeries, 3);
-module.exports = exports['default'];
+module.exports = exports.default;

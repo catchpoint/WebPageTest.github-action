@@ -102,7 +102,7 @@ function handlePromise(promise, callback) {
     return promise.then(value => {
         invokeCallback(callback, null, value);
     }, err => {
-        invokeCallback(callback, err && err.message ? err : new Error(err));
+        invokeCallback(callback, err && (err instanceof Error || err.message) ? err : new Error(err));
     });
 }
 
@@ -115,4 +115,4 @@ function invokeCallback(callback, error, value) {
         }, err);
     }
 }
-module.exports = exports['default'];
+module.exports = exports.default;

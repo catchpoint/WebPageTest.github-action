@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _filter2 = require('./internal/filter.js');
@@ -37,7 +37,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Promise} a promise, if no callback provided
  */
 function filterSeries(coll, iteratee, callback) {
-  return (0, _filter3.default)(_eachOfSeries2.default, coll, iteratee, callback);
+    return (0, _filter3.default)(_eachOfSeries2.default, coll, iteratee, callback);
 }
 exports.default = (0, _awaitify2.default)(filterSeries, 3);
-module.exports = exports['default'];
+module.exports = exports.default;

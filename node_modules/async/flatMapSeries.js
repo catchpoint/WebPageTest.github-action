@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _concatLimit = require('./concatLimit.js');
@@ -35,7 +35,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns A Promise, if no callback is passed
  */
 function concatSeries(coll, iteratee, callback) {
-  return (0, _concatLimit2.default)(coll, 1, iteratee, callback);
+    return (0, _concatLimit2.default)(coll, 1, iteratee, callback);
 }
 exports.default = (0, _awaitify2.default)(concatSeries, 3);
-module.exports = exports['default'];
+module.exports = exports.default;

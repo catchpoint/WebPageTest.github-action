@@ -74,4 +74,4 @@ function retryable(opts, task) {
         return callback[_promiseCallback.PROMISE_SYMBOL];
     });
 }
-module.exports = exports['default'];
+module.exports = exports.default;

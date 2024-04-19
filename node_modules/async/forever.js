@@ -65,4 +65,4 @@ function forever(fn, errback) {
     return next();
 }
 exports.default = (0, _awaitify2.default)(forever, 2);
-module.exports = exports['default'];
+module.exports = exports.default;

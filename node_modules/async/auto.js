@@ -330,4 +330,4 @@ function auto(tasks, concurrency, callback) {
 
     return callback[_promiseCallback.PROMISE_SYMBOL];
 }
-module.exports = exports['default'];
+module.exports = exports.default;

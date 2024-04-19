@@ -43,4 +43,4 @@ function doUntil(iteratee, test, callback) {
         _test(...args, (err, truth) => cb(err, !truth));
     }, callback);
 }
-module.exports = exports['default'];
+module.exports = exports.default;
