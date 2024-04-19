@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: WebPageTest      
-        uses: catchpoint/WebPageTest.api-nodejs@main
+        uses: catchpoint/WebPageTest.github-action@main
         with:
           apiKey: ${{ secrets.WPT_API_KEY }}
           urls: |
@@ -80,7 +80,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: WebPageTest
-        uses: catchpoint/WebPageTest.api-nodejs@main
+        uses: catchpoint/WebPageTest.github-action@main
         with:
           apiKey: ${{ secrets.WPT_API_KEY }}
           urls: |
@@ -131,7 +131,7 @@ jobs:
           site_name: 'your-netlify-site-name'
 
       - name: WebPageTest
-        uses: catchpoint/WebPageTest.api-nodejs@main
+        uses: catchpoint/WebPageTest.github-action@main
         with:
           apiKey: ${{ secrets.WPT_API_KEY }}
           urls: |
@@ -167,7 +167,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: WebPageTest
-        uses: catchpoint/WebPageTest.api-nodejs@main
+        uses: catchpoint/WebPageTest.github-action@main
         with:
           apiKey: ${{ secrets.WPT_API_KEY }}
           urls: |
