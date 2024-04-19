@@ -73,11 +73,14 @@ async function renderComment(data) {
     if (!prNumber) throw new Error('Incompatible event "' + GH_EVENT_NAME + '"');
 
     //submit a comment
-    await octokit.rest.issues.createComment({
+    await octokit.request(f'POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: prNumber,
       body: markdown,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
     });
   } catch (e) {
     console.log(e);
