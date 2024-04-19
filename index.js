@@ -72,7 +72,7 @@ async function renderComment(data) {
 
     if (!prNumber) throw new Error('Incompatible event "' + GH_EVENT_NAME + '"');
 
-    //submit a comment
+    // Submit a comment
     await octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
       owner: context.repo.owner,
       repo: context.repo.repo,
