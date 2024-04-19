@@ -74,7 +74,8 @@ async function renderComment(data) {
 
     //submit a comment
     await octokit.rest.issues.createComment({
-      ...context.repo,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
       issue_number: prNumber,
       body: markdown,
     });

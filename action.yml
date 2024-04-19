@@ -1,28 +1,28 @@
-name: 'WebPageTest GitHub Action'
-author: 'WebPageTest'
-description: 'Automatically test code changes in WebPageTest and enforce performance budgets'
+name: "WebPageTest GitHub Action"
+author: "WebPageTest"
+description: "Automatically test code changes in WebPageTest and enforce performance budgets"
 inputs:
   apiKey:
-    description: 'WebPageTest API Token'
+    description: "WebPageTest API Token"
     required: true
   urls:
-    description: 'List of URL(s) to test'
+    description: "List of URL(s) to test"
     required: true
   budget:
-    description: 'Path to WebPageTest testspecs.json file'
+    description: "Path to WebPageTest testspecs.json file"
     required: false
   label:
-    description: 'Label for test (shows up in WebPageTest)'
+    description: "Label for test (shows up in WebPageTest)"
     required: false
   wptOptions:
-    description: 'Path to JSON file with WebPageTest test options (see https://github.com/marcelduran/webpagetest-api#test-works-for-runtest-method-only)'
+    description: "Path to JSON file with WebPageTest test options (see https://github.com/marcelduran/webpagetest-api#test-works-for-runtest-method-only)"
     required: false
   GITHUB_TOKEN:
-    description: 'Secret GitHub Token (automatically provided by GitHub)'
-    default: ${{ github.token }}
+    description: "Secret GitHub Token (automatically provided by GitHub)"
+    required: true
 runs:
-  using: 'node12'
-  main: 'index.js'
+  using: "node12"
+  main: "index.js"
 branding:
-  icon: 'bar-chart-2'
-  color: 'blue'
+  icon: "bar-chart-2"
+  color: "blue"
