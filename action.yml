@@ -19,7 +19,7 @@ inputs:
     required: false
   GITHUB_TOKEN:
     description: "Secret GitHub Token (automatically provided by GitHub)"
-    required: true
+    default: ${{ github.token }}
 runs:
   using: "node12"
   main: "index.js"
