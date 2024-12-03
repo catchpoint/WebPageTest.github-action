@@ -1,6 +1,6 @@
 {
   "name": "webpagetest-github-action",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Official WebPageTest GitHub Action",
   "main": "index.js",
   "scripts": {
