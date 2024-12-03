@@ -15,7 +15,7 @@ inputs:
     description: "Label for test (shows up in WebPageTest)"
     required: false
   wptOptions:
-    description: "Path to JSON file with WebPageTest test options (see https://github.com/marcelduran/webpagetest-api#test-works-for-runtest-method-only)"
+    description: "Path to JSON file with WebPageTest test options (see https://github.com/catchpoint/WebPageTest.api-nodejs)"
     required: false
   GITHUB_TOKEN:
     description: "Secret GitHub Token (automatically provided by GitHub)"
