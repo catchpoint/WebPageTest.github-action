@@ -67,8 +67,8 @@ async function renderComment(data) {
       GH_EVENT_NAME == "pull_request"
         ? context.payload.pull_request.number
         : GH_EVENT_NAME == "issue_comment"
-        ? context.payload.issue.number
-        : null;
+          ? context.payload.issue.number
+          : null;
 
     if (!prNumber) throw new Error('Incompatible event "' + GH_EVENT_NAME + '"');
 
@@ -104,7 +104,7 @@ function collectData(results, runData) {
   runData["tests"].push(testData);
 }
 async function run() {
-  const wpt = new WebPageTest("www.webpagetest.org", WPT_API_KEY);
+  const wpt = new WebPageTest("https://www.webpagetest.org", WPT_API_KEY);
 
   //TODO: make this configurable
   let options = {
@@ -153,11 +153,11 @@ async function run() {
               //test submitted with specs
               core.info(
                 "Tests successfully completed for " +
-                  url +
-                  ". Full results at https://" +
-                  wpt.config.hostname +
-                  "/result/" +
-                  result.result.testId
+                url +
+                ". Full results at https://" +
+                wpt.config.hostname +
+                "/result/" +
+                result.result.testId
               );
 
               if (isReportSupported()) {
@@ -178,9 +178,9 @@ async function run() {
               //test was submitted without testspecs
               core.info(
                 "Tests successfully completed for " +
-                  url +
-                  ". Full results at " +
-                  result.result.data.summary
+                url +
+                ". Full results at " +
+                result.result.data.summary
               );
 
               if (isReportSupported()) {
